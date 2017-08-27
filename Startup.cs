@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using vega.Persistence;
 
 namespace WebApplicationBasic
 {
@@ -33,8 +35,12 @@ namespace WebApplicationBasic
         /****this methord Used for Dependency injection*/
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
+            services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
             // Add framework services.
             services.AddMvc();
+            
         }
         /**********************end */
         
@@ -81,6 +87,7 @@ namespace WebApplicationBasic
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+
             
         }
     }
